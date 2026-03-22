@@ -6,8 +6,11 @@ add_subdirectory(hidapi)
 include_directories(hidapi/hidapi)
 
 add_library(${PROJECT_NAME}
+	src/LL/package_base.cpp
+	src/LL/light_data.cpp
+	src/LL/commands.cpp
+	src/LL/boxcutter.cpp
 	src/naraapi_hl.cpp
-	src/naraapi_ll.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE hidapi::hidapi)
