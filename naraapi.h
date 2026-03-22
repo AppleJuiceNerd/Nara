@@ -26,6 +26,67 @@ struct API_LED_DATA
 
 namespace Nara 
 {
+	// Enums for the led_data values
+	
+	// The light mode that determines how the light will behave
+	enum LED_Modes
+	{
+		STATIC         = 0x0,
+		INDICATOR      = 0x1,
+		BREATHING      = 0x2,
+		BREATHING_ONCE = 0x3,
+		WAVE           = 0x4,
+		SWITCH         = 0x6,
+		SWITCH_ONCE    = 0x7,
+		BLINK          = 0x8,
+		BLINK_ONCE     = 0x9,
+		FADE_OUT       = 0xE,
+		FADE_IN        = 0xF
+	};
+
+	// The color mode of the light, which changes what colors are used 
+	enum LED_ColorModes
+	{
+		STATIC_COLOR        = 0x0,
+		LOOP_COLOR_TABLES   = 0x1,
+		RANDOM_COLOR_TABLES = 0x2,
+		RANDOM_COLOR        = 0x3
+	};
+
+	// The speed, which changes how fast the lights change, if the light mode allows for it
+	enum LED_Speed
+	{
+		X8 = 0x0,
+		X4 = 0x1,
+		X2 = 0x2,
+		X1 = 0x3
+	};
+
+	// The trigger event, changes what the light reacts to
+	enum LED_Event
+	{
+		NONE               = 0x0,
+		PRESS_LIGHT_UP     = 0x1,
+		RELEASE_LIGHT_UP   = 0x2,
+		PRESS_FADE_IN      = 0x3,
+		RELEASE_FADE_IN    = 0x4,
+		PRESS_NEXT_COLOR   = 0x5,
+		RELEASE_NEXT_COLOR = 0x6,
+		SCRIPT_RUNNING     = 0x7,
+		SCRIPT_STOP        = 0x9
+	};
+
+	// The indicator mode, changes what the light will indicate
+	enum LED_Indicator
+	{
+		NUM_LOCK     = 0x1,
+		CAPS_LOCK    = 0x2,
+		SCROLL_LOCK  = 0x4,
+		COMPOSE_LOCK = 0x8,
+		KANA_LOCK    = 0x10
+	};
+
+
 	// Lower level functions
 	namespace LL
 	{
