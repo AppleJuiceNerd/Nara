@@ -27,7 +27,7 @@ struct API_LED_DATA
 namespace Nara 
 {
 	// Enums for the led_data values
-	
+
 	// The light mode that determines how the light will behave
 	enum LED_Modes
 	{
@@ -210,6 +210,22 @@ namespace Nara
 		
 		void SetLight(int key, int fn, Color color);
 		Color ReadLight(int key, int fn);
+
+		void SetLightMode(int key, int fn, int mode);
+		int ReadLightMode(int key, int fn, int mode);
+
+		void SetLightColorTable(int key, int fn, int table);
+		int GetLightColorTable(int key, int fn);
+		
+		void SetLightTriggerEvent(int key, int fn, int event);
+		int GetLightTriggerEvent(int key, int fn);
+
+		void SetLightSpeed(int key, int fn, int speed);
+		int GetLightSpeed(int key, int fn);
+
+		void SetLightDuration(int key, int fn, int duration);
+		int GetLightDuration(int key, int fn);
+		
 
 	};
 
