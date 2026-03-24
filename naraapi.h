@@ -225,8 +225,6 @@ namespace Nara
 
 		void SetLightDuration(int key, int fn, int duration);
 		int GetLightDuration(int key, int fn);
-		
-
 	};
 
 	// Basically wraps hid_init() to a T. Returns 0 on success, -1 otherwise.

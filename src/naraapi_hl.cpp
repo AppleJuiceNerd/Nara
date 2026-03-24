@@ -86,3 +86,41 @@ Nara::Color Nara::Sayo::ReadLight(int key, int fn)
 		lights.led_fn[fn].b
 	};
 }
+
+void Nara::Sayo::SetLightMode(int key, int fn, int mode)
+{
+	// The data to be sent and received
+	uint8_t results[1024] = { 0 };
+
+	// Get current state of the lights
+	LL::read_key_lights(device, key, results);
+	
+	// Copy that state to a Package
+	LL::LightData lights;
+	lights.LoadBytes(&results[LL::Boxcutter(results).GetOffset(0)]);
+
+	lights.index = key;
+
+	// Modify the Light mode
+	lights.led_fn[fn].led_mode = mode;
+
+	// Set the new lights
+	LL::set_key_lights(device, key, lights, results);
+	return;
+}
+
+int Nara::Sayo::ReadLightMode(int key, int fn, int mode)
+{
+	// The data to be sent and received
+	uint8_t results[1024] = { 0 };
+
+	// Get current state of the lights
+	LL::read_key_lights(device, key, results);
+
+	// Copy that state to a Package
+	LL::LightData lights;
+	lights.LoadBytes(&results[LL::Boxcutter(results).GetOffset(0)]);
+
+	// Return the color
+	return lights.led_fn[fn].led_mode;
+}
