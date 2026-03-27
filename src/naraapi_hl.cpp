@@ -130,3 +130,22 @@ int Nara::Sayo::GetLightColorTable(int key, int fn)
 	// Return color table
 	return lights.led_fn[fn].color_table_number;
 }
+
+void Nara::Sayo::SetLightTriggerEvent(int key, int fn, int event)
+{
+	LL::LightData lights = LightSetup(key);
+
+	// Modify trigger event
+	lights.led_fn[fn].event = event;
+
+	LightSend(lights);
+}
+
+
+int Nara::Sayo::GetLightTriggerEvent(int key, int fn)
+{
+	LL::LightData lights = LightSetup(key);
+
+	// Return trigger event
+	return lights.led_fn[fn].event;
+}
