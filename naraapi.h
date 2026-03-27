@@ -225,6 +225,7 @@ namespace Nara
 		void SetLightColorTable(int key, int fn, int table);
 		int GetLightColorTable(int key, int fn);
 		
+		// NOTE: These don't use enum types because there's two event types
 		void SetLightTriggerEvent(int key, int fn, int event);
 		int GetLightTriggerEvent(int key, int fn);
 
