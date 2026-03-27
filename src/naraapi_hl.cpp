@@ -105,7 +105,7 @@ void Nara::Sayo::SetLightMode(int key, int fn, int mode)
 	return;
 }
 
-int Nara::Sayo::ReadLightMode(int key, int fn, int mode)
+int Nara::Sayo::ReadLightMode(int key, int fn)
 {
 	LL::LightData lights = LightSetup(key);
 
