@@ -166,3 +166,21 @@ Nara::LED_Speed Nara::Sayo::GetLightSpeed(int key, int fn)
 	// Return light speed
 	return (Nara::LED_Speed) (lights.led_fn[fn].led_mode >> 6);
 }
+
+void Nara::Sayo::SetLightDuration(int key, int fn, uint8_t duration)
+{
+	LL::LightData lights = LightSetup(key);
+
+	// Modify light duration
+	lights.led_fn[fn].lighting_time = duration;
+
+	LightSend(lights);
+}
+
+uint8_t Nara::Sayo::GetLightDuration(int key, int fn)
+{
+	LL::LightData lights = LightSetup(key);
+
+	// Return light duration
+	return lights.led_fn[fn].lighting_time;
+}
