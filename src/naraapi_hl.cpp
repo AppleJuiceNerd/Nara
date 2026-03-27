@@ -184,3 +184,21 @@ uint8_t Nara::Sayo::GetLightDuration(int key, int fn)
 	// Return light duration
 	return lights.led_fn[fn].lighting_time;
 }
+
+void Nara::Sayo::SetDarkDuration(int key, int fn, uint8_t duration)
+{
+	LL::LightData lights = LightSetup(key);
+
+	// Modify dark duration
+	lights.led_fn[fn].dark_time = duration;
+
+	LightSend(lights);
+}
+
+uint8_t Nara::Sayo::GetDarkDuration(int key, int fn)
+{
+	LL::LightData lights = LightSetup(key);
+
+	// Return dark duration
+	return lights.led_fn[fn].dark_time;
+}

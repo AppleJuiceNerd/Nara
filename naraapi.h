@@ -234,6 +234,9 @@ namespace Nara
 
 		void SetLightDuration(int key, int fn, uint8_t duration);
 		uint8_t GetLightDuration(int key, int fn);
+
+		void SetDarkDuration(int key, int fn, uint8_t duration);
+		uint8_t GetDarkDuration(int key, int fn);
 	};
 
 	// Basically wraps hid_init() to a T. Returns 0 on success, -1 otherwise.
