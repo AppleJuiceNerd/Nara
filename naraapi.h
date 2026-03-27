@@ -2,6 +2,8 @@
 #include <hidapi/hidapi.h>
 #include <vector>
 
+#pragma once
+
 
 // SayoDevice API Structures
 struct API_LED_DATA
