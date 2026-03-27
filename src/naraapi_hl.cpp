@@ -93,7 +93,7 @@ Nara::Color Nara::Sayo::ReadLight(int key, int fn)
 	};
 }
 
-void Nara::Sayo::SetLightMode(int key, int fn, int mode)
+void Nara::Sayo::SetLightMode(int key, int fn, LED_Modes mode)
 {
 	LL::LightData lights = LightSetup(key);
 
@@ -105,10 +105,10 @@ void Nara::Sayo::SetLightMode(int key, int fn, int mode)
 	return;
 }
 
-int Nara::Sayo::ReadLightMode(int key, int fn)
+Nara::LED_Modes Nara::Sayo::ReadLightMode(int key, int fn)
 {
 	LL::LightData lights = LightSetup(key);
 
 	// Return the led mode
-	return lights.led_fn[fn].led_mode;
+	return (LED_Modes) lights.led_fn[fn].led_mode;
 }

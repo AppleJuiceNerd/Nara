@@ -219,8 +219,8 @@ namespace Nara
 		void SetLight(int key, int fn, Color color);
 		Color ReadLight(int key, int fn);
 
-		void SetLightMode(int key, int fn, int mode);
-		int ReadLightMode(int key, int fn);
+		void SetLightMode(int key, int fn, LED_Modes mode);
+		LED_Modes ReadLightMode(int key, int fn);
 
 		void SetLightColorTable(int key, int fn, int table);
 		int GetLightColorTable(int key, int fn);
