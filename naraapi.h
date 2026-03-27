@@ -200,6 +200,12 @@ namespace Nara
 	{
 	private:
 		hid_device *device;
+
+		// Base functions to mitigate code repetition
+
+		LL::LightData LightSetup(int key);
+		void LightSend(LL::LightData lights);
+
 	public:
 		// Gets the first sayodevice found and uses it
 		Sayo();

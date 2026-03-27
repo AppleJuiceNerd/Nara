@@ -43,7 +43,8 @@ hid_device *Nara::Sayo::get_device()
 	return device;
 }
 
-void Nara::Sayo::SetLight(int key, int fn, Color color)
+
+Nara::LL::LightData Nara::Sayo::LightSetup(int key)
 {
 	// The data to be sent and received
 	uint8_t results[1024] = { 0 };
@@ -55,29 +56,34 @@ void Nara::Sayo::SetLight(int key, int fn, Color color)
 	LL::LightData lights;
 	lights.LoadBytes(&results[LL::Boxcutter(results).GetOffset(0)]);
 
-	lights.index = key;
+	return lights;
+}
+
+void Nara::Sayo::LightSend(LL::LightData lights)
+{
+	// Set the new lights
+	// TODO: lights.index feels repetitive; maybe this function shouldn't need an index
+	LL::set_key_lights(device, lights.index, lights, NULL);
+}
+
+
+void Nara::Sayo::SetLight(int key, int fn, Color color)
+{
+	LL::LightData lights = LightSetup(key);
 
 	// Modify the color
 	lights.led_fn[fn].r = color.r;
 	lights.led_fn[fn].g = color.g;
 	lights.led_fn[fn].b = color.b;
 
-	// Set the new lights
-	LL::set_key_lights(device, key, lights, results);
+	LightSend(lights);
+
 	return;
 }
 
 Nara::Color Nara::Sayo::ReadLight(int key, int fn)
 {
-	// The data to be sent and received
-	uint8_t results[1024] = { 0 };
-
-	// Get current state of the lights
-	LL::read_key_lights(device, key, results);
-
-	// Copy that state to a Package
-	LL::LightData lights;
-	lights.LoadBytes(&results[LL::Boxcutter(results).GetOffset(0)]);
+	LL::LightData lights = LightSetup(key);
 
 	// Return the color
 	return {
@@ -89,38 +95,20 @@ Nara::Color Nara::Sayo::ReadLight(int key, int fn)
 
 void Nara::Sayo::SetLightMode(int key, int fn, int mode)
 {
-	// The data to be sent and received
-	uint8_t results[1024] = { 0 };
-
-	// Get current state of the lights
-	LL::read_key_lights(device, key, results);
-	
-	// Copy that state to a Package
-	LL::LightData lights;
-	lights.LoadBytes(&results[LL::Boxcutter(results).GetOffset(0)]);
-
-	lights.index = key;
+	LL::LightData lights = LightSetup(key);
 
 	// Modify the Light mode
 	lights.led_fn[fn].led_mode = mode;
 
-	// Set the new lights
-	LL::set_key_lights(device, key, lights, results);
+	LightSend(lights);
+
 	return;
 }
 
 int Nara::Sayo::ReadLightMode(int key, int fn, int mode)
 {
-	// The data to be sent and received
-	uint8_t results[1024] = { 0 };
+	LL::LightData lights = LightSetup(key);
 
-	// Get current state of the lights
-	LL::read_key_lights(device, key, results);
-
-	// Copy that state to a Package
-	LL::LightData lights;
-	lights.LoadBytes(&results[LL::Boxcutter(results).GetOffset(0)]);
-
-	// Return the color
+	// Return the led mode
 	return lights.led_fn[fn].led_mode;
 }
