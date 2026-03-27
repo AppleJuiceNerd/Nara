@@ -98,7 +98,7 @@ void Nara::Sayo::SetLightMode(int key, int fn, LED_Modes mode)
 	LL::LightData lights = LightSetup(key);
 
 	// Modify the Light mode
-	lights.led_fn[fn].led_mode = mode;
+	lights.led_fn[fn].led_mode = ( lights.led_fn[fn].led_mode & 0xF0 ) & mode;
 
 	LightSend(lights);
 
