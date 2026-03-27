@@ -112,3 +112,21 @@ Nara::LED_Modes Nara::Sayo::ReadLightMode(int key, int fn)
 	// Return the led mode
 	return (LED_Modes) lights.led_fn[fn].led_mode;
 }
+
+void Nara::Sayo::SetLightColorTable(int key, int fn, int table)
+{
+	LL::LightData lights = LightSetup(key);
+
+	// Modify color table
+	lights.led_fn[fn].color_table_number = table;
+
+	LightSend(lights);
+}
+
+int Nara::Sayo::GetLightColorTable(int key, int fn)
+{
+	LL::LightData lights = LightSetup(key);
+
+	// Return color table
+	return lights.led_fn[fn].color_table_number;
+}
