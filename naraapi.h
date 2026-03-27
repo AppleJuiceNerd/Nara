@@ -229,8 +229,8 @@ namespace Nara
 		void SetLightTriggerEvent(int key, int fn, int event);
 		int GetLightTriggerEvent(int key, int fn);
 
-		void SetLightSpeed(int key, int fn, int speed);
-		int GetLightSpeed(int key, int fn);
+		void SetLightSpeed(int key, int fn, LED_Speed speed);
+		LED_Speed GetLightSpeed(int key, int fn);
 
 		void SetLightDuration(int key, int fn, int duration);
 		int GetLightDuration(int key, int fn);

@@ -141,11 +141,28 @@ void Nara::Sayo::SetLightTriggerEvent(int key, int fn, int event)
 	LightSend(lights);
 }
 
-
 int Nara::Sayo::GetLightTriggerEvent(int key, int fn)
 {
 	LL::LightData lights = LightSetup(key);
 
 	// Return trigger event
 	return lights.led_fn[fn].event;
+}
+
+void Nara::Sayo::SetLightSpeed(int key, int fn, LED_Speed speed)
+{
+	LL::LightData lights = LightSetup(key);
+
+	// Modify light speed
+	lights.led_fn[fn].led_mode = ( lights.led_fn[fn].led_mode & 0x3F ) & (speed << 6);
+
+	LightSend(lights);
+}
+
+Nara::LED_Speed Nara::Sayo::GetLightSpeed(int key, int fn)
+{
+	LL::LightData lights = LightSetup(key);
+
+	// Return light speed
+	return (Nara::LED_Speed) (lights.led_fn[fn].led_mode >> 6);
 }
