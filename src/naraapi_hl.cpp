@@ -98,7 +98,7 @@ void Nara::Sayo::SetLightMode(int key, int fn, LED_Modes mode)
 	LL::LightData lights = LightSetup(key);
 
 	// Modify the Light mode
-	lights.led_fn[fn].led_mode = ( lights.led_fn[fn].led_mode & 0xF0 ) & mode;
+	lights.led_fn[fn].led_mode = ( lights.led_fn[fn].led_mode & 0xF0 ) | mode;
 
 	LightSend(lights);
 
@@ -118,7 +118,7 @@ void Nara::Sayo::SetColorMode(int key, int fn, LED_ColorModes mode)
 	LL::LightData lights = LightSetup(key);
 
 	// Modify the color mode
-	lights.led_fn[fn].led_mode = ( lights.led_fn[fn].led_mode & 0xCF ) & ( mode << 4 );
+	lights.led_fn[fn].led_mode = ( lights.led_fn[fn].led_mode & 0xCF ) | ( mode << 4 );
 
 	LightSend(lights);
 
@@ -130,7 +130,7 @@ Nara::LED_ColorModes Nara::Sayo::ReadColorMode(int key, int fn)
 	LL::LightData lights = LightSetup(key);
 
 	// Return the color mode
-	return (LED_ColorModes) ( (lights.led_fn[fn].led_mode & 0xCF) >> 4 );
+	return (LED_ColorModes) ( (lights.led_fn[fn].led_mode >> 4) & 0b11 );
 }
 
 void Nara::Sayo::SetLightColorTable(int key, int fn, int table)
@@ -174,7 +174,7 @@ void Nara::Sayo::SetLightSpeed(int key, int fn, LED_Speed speed)
 	LL::LightData lights = LightSetup(key);
 
 	// Modify light speed
-	lights.led_fn[fn].led_mode = ( lights.led_fn[fn].led_mode & 0x3F ) & (speed << 6);
+	lights.led_fn[fn].led_mode = ( lights.led_fn[fn].led_mode & 0x3F ) | (speed << 6);
 
 	LightSend(lights);
 }
