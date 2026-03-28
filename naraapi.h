@@ -75,7 +75,7 @@ namespace Nara
 		PRESS_NEXT_COLOR   = 0x5,
 		RELEASE_NEXT_COLOR = 0x6,
 		SCRIPT_RUNNING     = 0x7,
-		SCRIPT_STOP        = 0x9
+		SCRIPT_STOP        = 0x8
 	};
 
 	// The indicator mode, changes what the light will indicate
