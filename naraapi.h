@@ -219,11 +219,11 @@ namespace Nara
 		void SetLight(int key, int fn, Color color);
 		Color ReadLight(int key, int fn);
 
-		void SetLightMode(int key, int fn, LED_Modes mode);
-		LED_Modes ReadLightMode(int key, int fn);
+		void SetLightMode(int key, int fn, int mode);
+		int ReadLightMode(int key, int fn);
 
-		void SetColorMode(int key, int fn, LED_ColorModes mode);
-		LED_ColorModes ReadColorMode(int key, int fn);
+		void SetColorMode(int key, int fn, int mode);
+		int ReadColorMode(int key, int fn);
 
 		void SetLightColorTable(int key, int fn, int table);
 		int GetLightColorTable(int key, int fn);
@@ -232,8 +232,8 @@ namespace Nara
 		void SetLightTriggerEvent(int key, int fn, int event);
 		int GetLightTriggerEvent(int key, int fn);
 
-		void SetLightSpeed(int key, int fn, LED_Speed speed);
-		LED_Speed GetLightSpeed(int key, int fn);
+		void SetLightSpeed(int key, int fn, int speed);
+		int GetLightSpeed(int key, int fn);
 
 		void SetLightDuration(int key, int fn, uint8_t duration);
 		uint8_t GetLightDuration(int key, int fn);

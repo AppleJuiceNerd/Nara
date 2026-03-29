@@ -93,7 +93,7 @@ Nara::Color Nara::Sayo::ReadLight(int key, int fn)
 	};
 }
 
-void Nara::Sayo::SetLightMode(int key, int fn, LED_Modes mode)
+void Nara::Sayo::SetLightMode(int key, int fn, int mode)
 {
 	LL::LightData lights = LightSetup(key);
 
@@ -105,7 +105,7 @@ void Nara::Sayo::SetLightMode(int key, int fn, LED_Modes mode)
 	return;
 }
 
-Nara::LED_Modes Nara::Sayo::ReadLightMode(int key, int fn)
+int Nara::Sayo::ReadLightMode(int key, int fn)
 {
 	LL::LightData lights = LightSetup(key);
 
@@ -113,7 +113,7 @@ Nara::LED_Modes Nara::Sayo::ReadLightMode(int key, int fn)
 	return (LED_Modes) (lights.led_fn[fn].led_mode & 0x0F);
 }
 
-void Nara::Sayo::SetColorMode(int key, int fn, LED_ColorModes mode)
+void Nara::Sayo::SetColorMode(int key, int fn, int mode)
 {
 	LL::LightData lights = LightSetup(key);
 
@@ -125,7 +125,7 @@ void Nara::Sayo::SetColorMode(int key, int fn, LED_ColorModes mode)
 	return;
 }
 
-Nara::LED_ColorModes Nara::Sayo::ReadColorMode(int key, int fn)
+int Nara::Sayo::ReadColorMode(int key, int fn)
 {
 	LL::LightData lights = LightSetup(key);
 
@@ -169,7 +169,7 @@ int Nara::Sayo::GetLightTriggerEvent(int key, int fn)
 	return lights.led_fn[fn].event;
 }
 
-void Nara::Sayo::SetLightSpeed(int key, int fn, LED_Speed speed)
+void Nara::Sayo::SetLightSpeed(int key, int fn, int speed)
 {
 	LL::LightData lights = LightSetup(key);
 
@@ -179,7 +179,7 @@ void Nara::Sayo::SetLightSpeed(int key, int fn, LED_Speed speed)
 	LightSend(lights);
 }
 
-Nara::LED_Speed Nara::Sayo::GetLightSpeed(int key, int fn)
+int Nara::Sayo::GetLightSpeed(int key, int fn)
 {
 	LL::LightData lights = LightSetup(key);
 
