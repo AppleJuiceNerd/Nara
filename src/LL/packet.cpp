@@ -1,7 +1,8 @@
+#include <cstring>
 #include "../../naraapi.h"
 
 
-void Nara::LL::Packet::GetBytes(uint8_t *bytes)
+void Nara::LL::Packet::UpdateData()
 {
 	int size;
 	
@@ -9,22 +10,21 @@ void Nara::LL::Packet::GetBytes(uint8_t *bytes)
 	if (long_packet)
 	{
 		size = 1024;
-		bytes[0] = 0x22;
+		data[0] = 0x22;
 	} else
 	{
 		size = 64;
-		bytes[0] = 0x21;
+		data[0] = 0x21;
 	}
 	
-	bytes[1] = echo;
+	data[1] = echo;
 	
 	
 	// setup loop
 	// offset in the packet
 	int offset = 4;
-	
+
 	// The bytes that will be filled by the packages' GetBytes function
-	
 	uint8_t buffer[1024] = { 0 };
 	
 	for(int pkg = 0; pkg < packages.size(); pkg++)
@@ -33,12 +33,17 @@ void Nara::LL::Packet::GetBytes(uint8_t *bytes)
 		packages[pkg]->GetBytes(buffer);
 		
 		// Copy package to bytes at offset
-		memcpy(&bytes[offset], &buffer, packages[pkg]->GetLength() + 4);
+		memcpy(&data[offset], &buffer, packages[pkg]->GetLength() + 4);
 
 		// Move to the next available space
 		// There should be four zeros after each package
 		offset += packages[pkg]->GetLength() + 4;
 	}
 	
-	*(uint16_t*)(&bytes[2]) = checksum(bytes, size);
+	*(uint16_t*)(&data[2]) = checksum(data, size);
+}
+
+void Nara::LL::Packet::GetBytes(uint8_t *bytes)
+{
+	memcpy(bytes, data, long_packet ? 1024 : 64);
 }
