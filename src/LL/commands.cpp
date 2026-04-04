@@ -1,4 +1,5 @@
 #include "../../naraapi.h"
+#include <hidapi/hidapi.h>
 #include <string.h>
 #include <hidapi.h>
 
@@ -13,6 +14,27 @@ uint16_t Nara::LL::checksum(uint8_t *data, int length)
 	}
 
 	return sum;
+}
+
+Nara::LL::Packet Nara::LL::send_packet(hid_device *sayo, Packet pkt)
+{
+	// Prepare byte array
+	uint8_t data[1024] = { 0 };
+
+	// Fill byte array with Packet data
+	pkt.GetBytes(data);
+
+	// Send data to the device
+	hid_write(sayo, data, 1024); // TODO: This should probably account for short packets
+
+	// Retrieve the result
+	// NOTE: May be prone to infinite loops
+	do {
+		hid_read(sayo, data, 1024);
+	} while (data[1] != pkt.echo);
+
+	Packet out;
+	return out;
 }
 
 void Nara::LL::set_key_lights(hid_device *sayo, uint8_t key, LightData req_data, uint8_t *result)

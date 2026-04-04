@@ -21,6 +21,7 @@ struct API_LED_DATA
 
 #define CMD_0X11_SIZE 56
 
+#pragma pack(1)
 struct API_CMD_0X11 {
 	uint8_t valid;
 	uint8_t led_class;
@@ -159,6 +160,13 @@ namespace Nara
 		// Represents a SayoDevice HID packet
 		class Packet
 		{
+		private:
+			// The byte array that will be used as the packet
+			uint8_t data[1024] = { 0 };
+
+			// Updates the byte array
+			// Should be called whenever changes are made to the package list
+			void UpdateData();
 		public:
 			bool long_packet = true; // Determines if the packet length is 64 (false) or 1024 (true)
 			uint8_t echo = NARA_ECHO_CODE; // The echo code
@@ -186,6 +194,8 @@ namespace Nara
 		};
 		
 		uint16_t checksum(uint8_t *data, int length);
+		Packet send_packet(hid_device *sayo, Packet pkt);
+
 		void set_key_lights(hid_device *sayo, uint8_t key, LightData req_data, uint8_t *result);
 		void read_key_lights(hid_device *sayo, uint8_t key, uint8_t *result);
 	};
