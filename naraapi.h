@@ -21,6 +21,19 @@ struct API_LED_DATA
 
 #define CMD_0X11_SIZE 56
 
+struct API_CMD_0X11 {
+	uint8_t valid;
+	uint8_t led_class;
+	uint16_t reserve1;
+	uint16_t led_site_x;
+	uint16_t led_site_y;
+	uint16_t led_width;
+	uint16_t led_height;
+	uint16_t fillet_angle;
+	uint16_t reserve2;
+	struct API_LED_DATA led_fn[5]; // 5 fns
+};
+
 
 // Nara's Echo (mostly functionally useless, just cool to have)
 #define NARA_ECHO_CODE 0xC5
@@ -116,18 +129,8 @@ namespace Nara
 		class LightData : public Package
 		{
 		public:
-			// NOTE: All of these fields, barring led_fn, have unknown purposes.
-			uint8_t valid         = 0;
-			uint8_t led_class     = 0;
-			uint16_t reserve1     = 0;
-			uint16_t led_site_x   = 0;
-			uint16_t led_site_y   = 0;
-			uint16_t led_width    = 0;
-			uint16_t led_height   = 0;
-			uint16_t fillet_angle = 0;
-			uint16_t reserve2     = 0;
-			struct API_LED_DATA led_fn[5] = { 0 }; // 5 fns
-
+			// The API structure this package represents
+			struct API_CMD_0X11 pkg;
 
 			// Assembles the package into a byte array for use in a Packet
 			void GetBytes(uint8_t *bytes) override;
