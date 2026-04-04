@@ -1,3 +1,6 @@
+#include "../../naraapi.h"
+
+
 void Nara::LL::Packet::GetBytes(uint8_t *bytes)
 {
 	int size;
