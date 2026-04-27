@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <hidapi/hidapi.h>
-#include <vector>
 
 #pragma once
 
@@ -106,98 +105,8 @@ namespace Nara
 	// Lower level functions
 	namespace LL
 	{
-		// Represents a SayoDevice command package
-		// Acts as a base class
-		class Package
-		{
-		protected:
-			uint8_t command; // Configured based on derived class
-			uint16_t length; // Also configured based on derived class
-
-		public:
-			uint8_t index;
-
-			// Assembles the package into a byte array for use in a Packet
-			virtual void GetBytes(uint8_t *bytes);
-
-			// Reads a Package and loads corresponding fields
-			virtual void LoadBytes(uint8_t *bytes);
-
-			// Gets the length of this Package
-			virtual uint16_t GetLength();
-		};
-
-		class LightData : public Package
-		{
-		public:
-			// The API structure this package represents
-			struct API_CMD_0X11 pkg;
-
-			// Assembles the package into a byte array for use in a Packet
-			void GetBytes(uint8_t *bytes) override;
-
-			// Assembles the package into a byte array for use in a Packet
-			void LoadBytes(uint8_t *bytes) override;
-			
-
-			uint16_t GetLength() override;
-
-			// Set private fields
-			LightData(bool read = false)
-			{
-				command = 0x11;
-				if(!read)
-				{
-					length = 56; // LightData packages are always 56 bytes long
-				}
-				else 
-				{
-					length = 0;
-				}
-			}
-		};
-
-		// Represents a SayoDevice HID packet
-		class Packet
-		{
-		private:
-			// The byte array that will be used as the packet
-			uint8_t data[1024] = { 0 };
-
-			// Updates the byte array
-			// Should be called whenever changes are made to the package list
-			void UpdateData();
-		public:
-			bool long_packet = true; // Determines if the packet length is 64 (false) or 1024 (true)
-			uint8_t echo = NARA_ECHO_CODE; // The echo code
-
-			std::vector<Package*> packages; // The packages that make up the packet
-
-			// Assembles the packet into a byte array for sending
-			void GetBytes(uint8_t *bytes);
-		};
-
-		
-		// A deserialization helper for SayoDevice communication packets
-		class Boxcutter
-		{
-		private:
-			uint8_t data[1024] = { 0 };
-			std::vector<uint16_t> offsets; 
-
-		public:
-			Boxcutter(uint8_t *bytes);
-
-			// Gets the offset at index
-			uint16_t GetOffset(int index);
-
-		};
-		
+		// Generates a two byte checksum based on the data block given to it.
 		uint16_t checksum(uint8_t *data, int length);
-		Packet send_packet(hid_device *sayo, Packet pkt);
-
-		void set_key_lights(hid_device *sayo, uint8_t key, LightData req_data, uint8_t *result);
-		void read_key_lights(hid_device *sayo, uint8_t key, uint8_t *result);
 	};
 
 	// Higher level functions and interfaces
@@ -215,11 +124,6 @@ namespace Nara
 	{
 	private:
 		hid_device *device;
-
-		// Base functions to mitigate code repetition
-
-		LL::LightData LightSetup(int key);
-		void LightSend(LL::LightData lights);
 
 	public:
 		// Gets the first sayodevice found and uses it
