@@ -1,5 +1,4 @@
 #include "../../naraapi.h"
-#include <hidapi/hidapi.h>
 #include <hidapi.h>
 
 

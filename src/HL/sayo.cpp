@@ -1,17 +1,6 @@
-#include "../naraapi.h"
-#include <cstring>
+#include "../../naraapi.h"
 #include <hidapi.h>
 
-
-int Nara::Init()
-{
-	return hid_init();
-}
-
-int Nara::Exit()
-{
-	return hid_exit();
-}
 
 // FIXME: This function might be prone to errors. I don't have more than one device to test.
 Nara::Sayo::Sayo()
