@@ -1,4 +1,5 @@
 #include "../../naraapi.h"
+#include <string.h>
 #include <hidapi.h>
 
 
@@ -12,4 +13,55 @@ uint16_t Nara::LL::checksum(uint8_t *data, int length)
 	}
 
 	return sum;
+}
+
+
+void Nara::LL::set_key_lights(hid_device *sayo, uint8_t key, struct API_CMD_0X11 req_data, uint8_t *result)
+{
+	struct PKT_HEADER pkt = { 0x22, NARA_ECHO_CODE, 0 };
+	struct CMD_HEADER cmd = { 60, 0x11, key };
+	uint8_t data[1024] = { 0 };
+
+	memcpy(&data, &pkt, sizeof(pkt));
+	memcpy(&data[4], &cmd, sizeof(cmd));
+	memcpy(&data[8], &req_data, sizeof(req_data));
+
+	pkt.checksum = checksum(data, 1000);
+	
+	memcpy(&data, &pkt, sizeof(pkt));
+
+	hid_write(sayo, data, 1024);
+	
+
+	// NOTE: May be prone to infinite loops
+	do {
+		hid_read(sayo, data, 1024);
+	} while (data[1] != NARA_ECHO_CODE);
+
+	memcpy(&data, &result, 1024);
+}
+
+void Nara::LL::read_key_lights(hid_device *sayo, uint8_t key, uint8_t *result)
+{
+	struct PKT_HEADER pkt = { 0x22, NARA_ECHO_CODE, 0 };
+	struct CMD_HEADER cmd = { 0x04, 0x11, key };
+	uint8_t data[1024] = { 0 };
+
+	memcpy(&data, &pkt, sizeof(pkt));
+	memcpy(&data[4], &cmd, sizeof(cmd));
+
+	pkt.checksum = checksum(data, 1000);
+	
+	memcpy(&data, &pkt, sizeof(pkt));
+	
+
+	hid_write(sayo, data, 1024);
+
+	// NOTE: May be prone to infinite loops
+	do {
+		hid_read(sayo, data, 1024);
+	} while (data[1] != NARA_ECHO_CODE);
+	
+
+	memcpy(result, &data, 1024);
 }
