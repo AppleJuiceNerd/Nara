@@ -35,6 +35,19 @@ struct API_CMD_0X11 {
 };
 
 
+struct PKT_HEADER {
+	uint8_t report_id;
+	uint8_t echo;
+	uint16_t checksum;
+};
+
+struct CMD_HEADER {
+	uint16_t data_length;
+	uint8_t command;
+	uint8_t index;
+};
+
+
 // Nara's Echo (mostly functionally useless, just cool to have)
 #define NARA_ECHO_CODE 0xC5
 
