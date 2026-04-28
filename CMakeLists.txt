@@ -10,6 +10,7 @@ add_library(${PROJECT_NAME}
 	
 	src/HL/nara.cpp
 	src/HL/sayo.cpp
+	src/HL/commands.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE hidapi::hidapi)
