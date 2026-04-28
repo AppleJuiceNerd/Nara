@@ -175,3 +175,31 @@ int Sayo::GetLightSpeed(int key, int fn)
 	// Return values
 	return ( package.led_fn[fn].event & 0b11000000 ) >> 6;
 }
+
+
+void Sayo::SetLightDuration(int key, int fn, uint8_t duration)
+{
+	// Initialize package
+	struct API_CMD_0X11 package = { 0 };
+	
+	// Read the current values
+	LL::light_config_read(device, key, &package);
+
+	// Modify the package
+	package.led_fn[fn].lighting_time = duration;
+
+	// Write new values
+	LL::light_config_write(device, key, &package);
+}
+
+uint8_t Sayo::GetLightDuration(int key, int fn)
+{
+	// Initialize package
+	struct API_CMD_0X11 package = { 0 };
+	
+	// Read the current values
+	LL::light_config_read(device, key, &package);
+	
+	// Return values
+	return package.led_fn[fn].lighting_time;
+}
