@@ -121,8 +121,8 @@ namespace Nara
 		// Generates a two byte checksum based on the data block given to it.
 		uint16_t checksum(uint8_t *data, int length);
 
-		void set_key_lights(hid_device *sayo, uint8_t key, struct API_CMD_0X11 *pkg);
-		void read_key_lights(hid_device *sayo, uint8_t key, struct API_CMD_0X11 *pkg);
+		void light_config_write(hid_device *sayo, uint8_t key, struct API_CMD_0X11 *pkg);
+		void light_config_read(hid_device *sayo, uint8_t key, struct API_CMD_0X11 *pkg);
 	};
 
 	// Higher level functions and interfaces

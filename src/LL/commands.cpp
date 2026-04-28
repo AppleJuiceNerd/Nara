@@ -16,7 +16,7 @@ uint16_t Nara::LL::checksum(uint8_t *data, int length)
 }
 
 
-void Nara::LL::set_key_lights(hid_device *sayo, uint8_t key, struct API_CMD_0X11 *pkg)
+void Nara::LL::light_config_write(hid_device *sayo, uint8_t key, struct API_CMD_0X11 *pkg)
 {
 	// Set up headers
 	struct PKT_HEADER pkt = { 0x22, NARA_ECHO_CODE, 0 };
@@ -49,7 +49,7 @@ void Nara::LL::set_key_lights(hid_device *sayo, uint8_t key, struct API_CMD_0X11
 	memcpy(pkg, &data[8], sizeof(*pkg));
 }
 
-void Nara::LL::read_key_lights(hid_device *sayo, uint8_t key, struct API_CMD_0X11 *pkg)
+void Nara::LL::light_config_read(hid_device *sayo, uint8_t key, struct API_CMD_0X11 *pkg)
 {
 	// Set up headers
 	struct PKT_HEADER pkt = { 0x22, NARA_ECHO_CODE, 0 };
