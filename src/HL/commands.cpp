@@ -147,3 +147,31 @@ int Sayo::GetLightTriggerEvent(int key, int fn)
 	// Return values
 	return package.led_fn[fn].event;
 }
+
+
+void Sayo::SetLightSpeed(int key, int fn, int speed)
+{
+		// Initialize package
+	struct API_CMD_0X11 package = { 0 };
+	
+	// Read the current values
+	LL::light_config_read(device, key, &package);
+
+	// Modify the package
+	package.led_fn[fn].event = ( package.led_fn[fn].event & 0b11000000 ) | ( (speed & 0b11) << 6 );
+
+	// Write new values
+	LL::light_config_write(device, key, &package);
+}
+
+int Sayo::GetLightSpeed(int key, int fn)
+{
+	// Initialize package
+	struct API_CMD_0X11 package = { 0 };
+	
+	// Read the current values
+	LL::light_config_read(device, key, &package);
+	
+	// Return values
+	return ( package.led_fn[fn].event & 0b11000000 ) >> 6;
+}
