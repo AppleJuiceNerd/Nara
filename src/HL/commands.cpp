@@ -46,7 +46,7 @@ void Sayo::SetLightMode(int key, int fn, int mode)
 	LL::light_config_read(device, key, &package);
 
 	// Modify the package
-	package.led_fn[fn].led_mode = mode;
+	package.led_fn[fn].led_mode = ( package.led_fn[fn].led_mode & 0xF0 ) | ( mode & 0xF );
 
 	// Write new values
 	LL::light_config_write(device, key, &package);
@@ -61,7 +61,7 @@ int Sayo::ReadLightMode(int key, int fn)
 	LL::light_config_read(device, key, &package);
 	
 	// Return values
-	return package.led_fn[fn].led_mode;
+	return package.led_fn[fn].led_mode & 0xF;
 }
 
 
@@ -74,7 +74,7 @@ void Sayo::SetColorMode(int key, int fn, int mode)
 	LL::light_config_read(device, key, &package);
 
 	// Modify the package
-	package.led_fn[fn].led_mode = ( package.led_fn[fn].led_mode & 0xF0 ) | ( mode & 0xF );
+	package.led_fn[fn].led_mode = ( package.led_fn[fn].led_mode & 0b11001111 ) | ( (mode & 0xb11) << 4 );
 
 	// Write new values
 	LL::light_config_write(device, key, &package);
@@ -89,7 +89,7 @@ int Sayo::ReadColorMode(int key, int fn)
 	LL::light_config_read(device, key, &package);
 	
 	// Return values
-	return package.led_fn[fn].led_mode & 0xF;
+	return ( package.led_fn[fn].led_mode & 0b00110000 ) >> 4;
 }
 
 
