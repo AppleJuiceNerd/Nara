@@ -119,3 +119,31 @@ int Sayo::GetLightColorTable(int key, int fn)
 	// Return values
 	return package.led_fn[fn].color_table_number;
 }
+
+
+void Sayo::SetLightTriggerEvent(int key, int fn, int event)
+{
+	// Initialize package
+	struct API_CMD_0X11 package = { 0 };
+	
+	// Read the current values
+	LL::light_config_read(device, key, &package);
+
+	// Modify the package
+	package.led_fn[fn].event = event;
+
+	// Write new values
+	LL::light_config_write(device, key, &package);
+}
+
+int Sayo::GetLightTriggerEvent(int key, int fn)
+{
+	// Initialize package
+	struct API_CMD_0X11 package = { 0 };
+	
+	// Read the current values
+	LL::light_config_read(device, key, &package);
+	
+	// Return values
+	return package.led_fn[fn].event;
+}
